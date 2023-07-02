@@ -7,14 +7,15 @@ import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../../store/userSlice';
 import { useNavigate } from "react-router-dom"
 
-const ComposeEmail = () => {
+const ComposeEmail = ({ onEmailSent }) => {
     const [emailContent, setEmailContent] = useState('');
     const [recipient, setRecipient] = useState('');
     const [subject, setSubject] = useState('');
     const [error, setError] = useState('');
     const navigate = useNavigate()
 
-    const userEmail = useSelector((state) => state.user.email).replace(/[@.]/g, "");
+    const userEmail = useSelector((state) => state.user.email).replace(/[@.]/g, "")
+    const senderEmail = useSelector((state) => state.user.email)
     console.log(userEmail)
 
     const dispatch = useDispatch()
@@ -26,16 +27,18 @@ const ComposeEmail = () => {
                 recipient,
                 subject,
                 content: emailContent,
+                senderEmail,
             });
 
-            if (response.ok) {
-                console.log('Email sent successfully.');
-
+            if (response.status >= 200 && response.status < 300) {
+                console.log('Email sent successfully.', response);
                 // Reset form fields
                 setEmailContent('');
                 setRecipient('');
                 setSubject('');
                 setError('');
+                // Invoke the callback function to notify the parent component
+                onEmailSent();
             } else {
                 const data = await response.json();
                 setError(data.error);

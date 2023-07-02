@@ -36,7 +36,7 @@ const Login = () => {
                 dispatch(setUserEmail(email))
                 setEmail("")
                 setPassword("")
-                navigate("/mailbox")
+                navigate("/inbox")
             } else {
                 const data = await response.json();
                 setError(data.error.message);
@@ -69,7 +69,7 @@ const Login = () => {
                 console.log(response)
                 setEmail('')
                 setPassword('')
-                navigate("/mailbox")
+                navigate("/inbox")
                 dispatch(setUserEmail('salvekiran2011@gmail.com'))
             } else {
                 const data = await response.json();
