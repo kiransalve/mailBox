@@ -4,6 +4,7 @@ const userSlice = createSlice({
   name: "user",
   initialState: {
     email: localStorage.getItem("userEmail") || "",
+    recipent:""
   },
   reducers: {
     setUserEmail: (state, action) => {
@@ -13,9 +14,9 @@ const userSlice = createSlice({
     logout: (state, action) => {
       state.email = "";
       localStorage.removeItem("userEmail");
-    },
+    },    
   },
 });
 
-export const { setUserEmail, logout } = userSlice.actions;
+export const { setUserEmail, logout  } = userSlice.actions;
 export default userSlice.reducer;
